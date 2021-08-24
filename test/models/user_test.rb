@@ -7,7 +7,8 @@ class UserTest < ActiveSupport::TestCase
     @user = User.new(
       first_name: "Sam",
       last_name: "Smith",
-      email: "sam@sample.com"
+      email: "sam@sample.com",
+      role: User.roles[:administrator]
     )
   end
 
@@ -101,6 +102,18 @@ class UserTest < ActiveSupport::TestCase
     @user.save!
     assert_raises ActiveRecord::RecordNotUnique do
       User.create!(first_name: "John", last_name: "Smith", email: "SAM@sample.com")
+    end
+  end
+
+  def test_user_should_be_not_be_valid_and_saved_without_role
+    @user.role = nil
+    assert_not @user.valid?
+  end
+
+  def test_user_should_be_invalid_with_an_invalid_role
+    assert_raises ArgumentError do
+      @user.role = "sales"
+      @user.save
     end
   end
 end
