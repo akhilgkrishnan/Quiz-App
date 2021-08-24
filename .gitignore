@@ -4,7 +4,7 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
-
+/db/*.sqlite3-[0-9]
 # Ignore database.yml file
 /config/database.yml
 
