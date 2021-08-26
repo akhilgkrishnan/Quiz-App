@@ -8,7 +8,9 @@ class UserTest < ActiveSupport::TestCase
       first_name: "Sam",
       last_name: "Smith",
       email: "sam@sample.com",
-      role: User.roles[:administrator]
+      role: User.roles[:administrator],
+      password: "sample",
+      password_confirmation: "sample"
     )
   end
 
@@ -101,7 +103,14 @@ class UserTest < ActiveSupport::TestCase
   def test_user_create_with_email_different_case
     @user.save!
     assert_raises ActiveRecord::RecordNotUnique do
-      User.create!(first_name: "John", last_name: "Smith", email: "SAM@sample.com")
+      User.create!(
+        first_name: "John",
+        last_name: "Smith",
+        email: "SAM@sample.com",
+        role: User.roles[:administrator],
+        password: "sample",
+        password_confirmation: "sample"
+      )
     end
   end
 
@@ -115,5 +124,49 @@ class UserTest < ActiveSupport::TestCase
       @user.role = "sales"
       @user.save
     end
+  end
+
+  def test_administrator_user_should_be_invalid_without_password
+    @user.password = nil
+    assert @user.invalid?
+    @user.save
+
+    assert_equal ["Password can't be blank"],
+      @user.errors.full_messages
+  end
+
+  def test_administrator_user_should_be_invalid_without_password_confirmation
+    @user.password_confirmation = nil
+    assert @user.invalid?
+    @user.save
+
+    assert_equal ["Password confirmation can't be blank"],
+      @user.errors.full_messages
+  end
+
+  def test_administrator_user_should_be_invalid_with_password_mismatch
+    @user.password = "password"
+    @user.password_confirmation = "password1"
+    assert @user.invalid?
+    @user.save
+
+    assert_equal "Password confirmation doesn't match Password",
+      @user.errors.full_messages.first
+  end
+
+  def test_administrator_user_should_be_invalid_without_minimum_password_length
+    @user.password = "pass"
+    @user.password_confirmation = "pass"
+    assert_not @user.save
+
+    assert_equal ["Password is too short (minimum is 6 characters)"],
+      @user.errors.full_messages
+  end
+
+  def test_standard_user_should_be_create_without_password
+    @user.password = nil
+    @user.password_confirmation = nil
+    @user.role = User.roles[:standard]
+    assert @user.save
   end
 end
