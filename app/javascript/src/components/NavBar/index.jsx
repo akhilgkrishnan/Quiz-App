@@ -35,6 +35,7 @@ const NavBar = () => {
           </div>
           {isLoggedIn && (
             <div>
+              <NavItem name="Reports" path="/" />
               <NavItem name={userName} path="/" />
               <a
                 className="inline-flex items-center px-1 pt-1 mr-3 font-semibold
