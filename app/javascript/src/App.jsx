@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { initializeLogger } from "common/logger";
@@ -9,6 +10,8 @@ import Login from "components/Authentication/Login";
 import PageLoader from "components/PageLoader";
 import PrivateRoute from "components/Common/PrivateRoute";
 import Dashboard from "components/Dashboard";
+
+export const UserLoggedInContext = createContext();
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -30,15 +33,18 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <PrivateRoute
-          path="/"
-          redirectRoute="/login"
-          condition={isLoggedIn}
-          component={Dashboard}
-        />
-      </Switch>
+      <UserLoggedInContext.Provider value={isLoggedIn}>
+        <ToastContainer />
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <PrivateRoute
+            path="/"
+            redirectRoute="/login"
+            condition={isLoggedIn}
+            component={Dashboard}
+          />
+        </Switch>
+      </UserLoggedInContext.Provider>
     </Router>
   );
 };

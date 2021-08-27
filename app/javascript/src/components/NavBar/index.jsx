@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import NavItem from "./NavItem";
-import { getFromLocalStorage } from "src/helpers/storage";
+import authApi from "apis/auth";
+import { getFromLocalStorage, setToLocalStorage } from "src/helpers/storage";
+import { UserLoggedInContext } from "src/App";
 
 const NavBar = () => {
-  const userName = getFromLocalStorage("authUserName");
-
+  const userName = getFromLocalStorage("userName");
+  const isLoggedIn = useContext(UserLoggedInContext);
+  const handleLogout = async () => {
+    try {
+      await authApi.logout();
+      setToLocalStorage({
+        isLoggedIn: false,
+        email: null,
+        userId: null,
+        userName: null
+      });
+      window.location.href = "/";
+    } catch (error) {
+      logger.error(error);
+    }
+  };
   return (
     <nav className="bg-white px-2 py-2 border-2 border-black">
       <div className="container mx-auto">
@@ -17,15 +33,18 @@ const NavBar = () => {
               </a>
             </h1>
           </div>
-          <div>
-            <NavItem name={userName} path="/" />
-            <a
-              className="inline-flex items-center px-1 pt-1 mr-3 font-semibold
+          {isLoggedIn && (
+            <div>
+              <NavItem name={userName} path="/" />
+              <a
+                className="inline-flex items-center px-1 pt-1 mr-3 font-semibold
                                       text-lg leading-5 cursor-pointer underline"
-            >
-              Logout
-            </a>
-          </div>
+                onClick={handleLogout}
+              >
+                Logout
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </nav>
