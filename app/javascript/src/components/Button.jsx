@@ -1,7 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Button = ({ type = "button", buttonText, onClick, loading }) => {
+const Button = ({
+  type = "button",
+  buttonText,
+  onClick,
+  loading,
+  iconClass
+}) => {
   return (
     <div className="mt-6">
       <button
@@ -12,6 +18,7 @@ const Button = ({ type = "button", buttonText, onClick, loading }) => {
          ease-in-out bg-bb-purple border border-transparent rounded-md
          group hover:bg-opacity-90 focus:outline-none"
       >
+        {iconClass && <i className={`${iconClass} text-xl mr-2`} />}
         {loading ? "Loading..." : buttonText}
       </button>
     </div>
