@@ -6,7 +6,7 @@ import Button from "components/Button";
 const LoginForm = ({ handleSubmit, setEmail, setPassword, loading }) => {
   return (
     <div
-      className="flex items-top justify-center min-h-screen
+      className="flex items-top justify-center
       px-4 py-12 lg:px-8 bg-gray-50 sm:px-6"
     >
       <div className="w-full max-w-md">
