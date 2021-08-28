@@ -162,11 +162,4 @@ class UserTest < ActiveSupport::TestCase
     assert_equal ["Password is too short (minimum is 6 characters)"],
       @user.errors.full_messages
   end
-
-  def test_standard_user_should_be_create_without_password
-    @user.password = nil
-    @user.password_confirmation = nil
-    @user.role = User.roles[:standard]
-    assert @user.save
-  end
 end
