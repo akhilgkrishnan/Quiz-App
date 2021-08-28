@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :set_current_user, only: :create
+
   def create
     user = User.find_by(email: login_params[:email].downcase)
     if user.present? && user.authenticate(login_params[:password])
