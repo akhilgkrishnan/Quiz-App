@@ -10,6 +10,7 @@ import Login from "components/Authentication/Login";
 import PageLoader from "components/PageLoader";
 import PrivateRoute from "components/Common/PrivateRoute";
 import Dashboard from "components/Dashboard";
+import CreateQuiz from "components/Quiz/CreateQuiz";
 
 export const UserLoggedInContext = createContext();
 
@@ -36,6 +37,12 @@ const App = () => {
       <UserLoggedInContext.Provider value={isLoggedIn}>
         <ToastContainer />
         <Switch>
+          <PrivateRoute
+            path="/quiz/create"
+            redirectRoute="/login"
+            condition={isLoggedIn}
+            component={CreateQuiz}
+          />
           <Route exact path="/login" component={Login} />
           <PrivateRoute
             path="/"

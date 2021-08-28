@@ -21,4 +21,17 @@ class QuizControllerTest < ActionDispatch::IntegrationTest
     response_body = response.parsed_body
     assert_equal @user.quizzes.count, response_body["quizzes"].length
   end
+
+  def test_create_quiz_with_blank_title_is_invalid
+    post "/quiz", params: { quiz: { title: "" } }
+    assert_response :unprocessable_entity
+    response_json = response.parsed_body
+    assert_equal ["Title can't be blank"], response_json["errors"]
+  end
+
+  def test_create_quiz
+    post "/quiz", params: { quiz: { title: "Indian Independence Quiz" } }
+    assert_response :success
+    assert_equal Quiz.count, 2
+  end
 end
