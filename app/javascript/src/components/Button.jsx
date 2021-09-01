@@ -8,38 +8,35 @@ const Button = ({
   onClick,
   loading,
   iconClass,
-  path = ""
+  path = "",
+  styleClass
 }) => {
   if (type === "link") {
     return (
-      <div className="mt-6">
-        <Link
-          to={path}
-          className="relative flex justify-center w-full px-4 py-2
+      <Link
+        to={path}
+        className={`${styleClass} relative flex justify-center w-full px-4 py-2
         text-sm font-medium leading-5 text-white transition duration-150
          ease-in-out bg-bb-purple border border-transparent rounded-md
-         group hover:bg-opacity-90 focus:outline-none"
-        >
-          {iconClass && <i className={`${iconClass} text-xl mr-2`} />}
-          {loading ? "Loading..." : buttonText}
-        </Link>
-      </div>
-    );
-  }
-  return (
-    <div className="mt-6">
-      <button
-        type={type}
-        onClick={onClick}
-        className="relative flex justify-center w-full px-4 py-2
-        text-sm font-medium leading-5 text-white transition duration-150
-         ease-in-out bg-bb-purple border border-transparent rounded-md
-         group hover:bg-opacity-90 focus:outline-none"
+         group hover:bg-opacity-90 focus:outline-none`}
       >
         {iconClass && <i className={`${iconClass} text-xl mr-2`} />}
         {loading ? "Loading..." : buttonText}
-      </button>
-    </div>
+      </Link>
+    );
+  }
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={`${styleClass} relative flex justify-center w-full px-4 py-2
+        text-sm font-medium leading-5 text-white transition duration-150
+         ease-in-out bg-bb-purple border border-transparent rounded-md
+         group hover:bg-opacity-90 focus:outline-none`}
+    >
+      {iconClass && <i className={`${iconClass} text-xl mr-2`} />}
+      {loading ? "Loading..." : buttonText}
+    </button>
   );
 };
 

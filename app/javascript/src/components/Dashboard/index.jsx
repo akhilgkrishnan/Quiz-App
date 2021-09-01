@@ -5,6 +5,7 @@ import Container from "components/Container";
 import Button from "components/Button";
 import PageLoader from "components/PageLoader";
 import quizApi from "apis/quiz";
+import ListQuiz from "components/Quiz/ListQuiz";
 
 const Dashboard = ({ history }) => {
   const [quizzes, setQuizzes] = useState([]);
@@ -37,15 +38,20 @@ const Dashboard = ({ history }) => {
     return (
       <Container>
         <div>
-          <div className="flex justify-end">
-            <Button
-              type="link"
-              buttonText="Add new quiz"
-              iconClass="ri-add-line"
-              path={"/quiz/create"}
-            />
+          <div className="flex justify-between">
+            <h1 className="text-2xl font-medium mt-6">List of Quizzes</h1>
+            <div className="mt-6">
+              <Button
+                type="link"
+                buttonText="Add new quiz"
+                iconClass="ri-add-line"
+                path={"/quiz/create"}
+              />
+            </div>
           </div>
-          Quizzes List
+          <div className="flex flex-col mt-4 ">
+            <ListQuiz data={quizzes} />
+          </div>
         </div>
       </Container>
     );
@@ -55,12 +61,14 @@ const Dashboard = ({ history }) => {
     <Container>
       <div>
         <div className="flex justify-end">
-          <Button
-            type="link"
-            buttonText="Add new quiz"
-            iconClass="ri-add-line"
-            path={"/quiz/create"}
-          />
+          <div className="mt-6">
+            <Button
+              type="link"
+              buttonText="Add new quiz"
+              iconClass="ri-add-line"
+              path={"/quiz/create"}
+            />
+          </div>
         </div>
         <h1 className="text-xl text-center text-gray-500 flex grid-rows-5 justify-center self-center mt-20">
           You have not created any quiz
