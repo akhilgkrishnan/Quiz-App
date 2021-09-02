@@ -7,7 +7,8 @@ const TableRow = ({
   rows,
   prepareRow,
   editQuiz,
-  destroyQuiz
+  destroyQuiz,
+  showQuiz
 }) => {
   const [openQuizDeleteModal, setOpenQuizDeleteModal] = useState(false);
   const [deletedQuizId, setDeletedQuizId] = useState(null);
@@ -30,7 +31,8 @@ const TableRow = ({
                 <Fragment key={idx}>
                   <td
                     {...cell.getCellProps()}
-                    className="px-6 py-3 text-sm break-all font-medium leading-5 max-w-xs cursor-pointer"
+                    className="px-6 py-3 text-sm break-all font-medium leading-5 max-w-xs cursor-pointer hover:text-blue-800"
+                    onClick={() => showQuiz(row.original.id)}
                   >
                     {cell.render("Cell")}
                   </td>

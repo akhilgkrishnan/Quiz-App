@@ -4,7 +4,7 @@ import { useTable } from "react-table";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-const Table = ({ data, editQuiz, destroyQuiz }) => {
+const Table = ({ data, editQuiz, destroyQuiz, showQuiz }) => {
   const columns = useMemo(
     () => [
       {
@@ -39,6 +39,7 @@ const Table = ({ data, editQuiz, destroyQuiz }) => {
                 prepareRow={prepareRow}
                 editQuiz={editQuiz}
                 destroyQuiz={destroyQuiz}
+                showQuiz={showQuiz}
               />
             </table>
           </div>

@@ -18,7 +18,7 @@ class QuizController < ApplicationController
   end
 
   def show
-    render status: :ok, json: { quiz: @quiz }
+    render status: :ok, json: { quiz: @quiz, questions: @quiz.questions }
   end
 
   def update
