@@ -50,12 +50,18 @@ const EditQuiz = ({ history }) => {
 
   return (
     <Container>
-      <QuizForm
-        title={title}
-        setTitle={setTitle}
-        loading={loading}
-        handleSubmit={handleSubmit}
-      />
+      {title ? (
+        <QuizForm
+          title={title}
+          setTitle={setTitle}
+          loading={loading}
+          handleSubmit={handleSubmit}
+        />
+      ) : (
+        <h1 className="text-xl text-center text-gray-500 flex grid-rows-5 justify-center self-center mt-20">
+          Quiz Not Found
+        </h1>
+      )}
     </Container>
   );
 };
