@@ -17,7 +17,9 @@ const QuizForm = ({ title, setTitle, loading, handleSubmit }) => {
         <div className="flex justify-left">
           <div className="md:w-1/3"></div>
           <div className="md:w-1/4">
-            <Button type="submit" buttonText="Submit" loading={loading} />
+            <div className="mt-6">
+              <Button type="submit" buttonText="Submit" loading={loading} />
+            </div>
           </div>
         </div>
       </form>

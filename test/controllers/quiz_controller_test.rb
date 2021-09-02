@@ -34,4 +34,21 @@ class QuizControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal Quiz.count, 2
   end
+
+  def test_update_quiz
+    put "/quiz/#{@quiz.id}", params: { quiz: { title: "Indian Independence Quiz" } }
+    assert_response :success
+    assert_equal "Indian Independence Quiz", Quiz.find(@quiz.id).title
+  end
+
+  def test_update_quiz_with_invalid_id
+    put "/quiz/12", params: { quiz: { title: "Indian Independence Quiz" } }
+    assert_response :not_found
+  end
+
+  def test_delete_quiz
+    delete "/quiz/#{@quiz.id}"
+    assert_response :success
+    assert_nil Quiz.find_by_id(@quiz.id)
+  end
 end
