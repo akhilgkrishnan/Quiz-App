@@ -30,6 +30,16 @@ const Dashboard = ({ history }) => {
     fetchQuiz();
   }, []);
 
+  const destroyQuiz = async id => {
+    try {
+      await quizApi.destroy(id);
+      await fetchQuiz();
+    } catch (error) {
+      logger.error(error);
+      setLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="w-screen h-screen">
@@ -54,7 +64,11 @@ const Dashboard = ({ history }) => {
             </div>
           </div>
           <div className="flex flex-col mt-4 ">
-            <ListQuiz data={quizzes} editQuiz={editQuiz} />
+            <ListQuiz
+              data={quizzes}
+              editQuiz={editQuiz}
+              destroyQuiz={destroyQuiz}
+            />
           </div>
         </div>
       </Container>

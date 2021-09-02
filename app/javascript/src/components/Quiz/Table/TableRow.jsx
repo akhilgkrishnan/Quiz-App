@@ -1,7 +1,17 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Button from "components/Button";
+import DeleteQuizModal from "components/Quiz/Modal/DeleteQuizModal";
 
-const TableRow = ({ getTableBodyProps, rows, prepareRow, editQuiz }) => {
+const TableRow = ({
+  getTableBodyProps,
+  rows,
+  prepareRow,
+  editQuiz,
+  destroyQuiz
+}) => {
+  const [openQuizDeleteModal, setOpenQuizDeleteModal] = useState(false);
+  const [deletedQuizId, setDeletedQuizId] = useState(null);
+
   return (
     <tbody
       className="bg-white divide-y divide-bb-gray-600"
@@ -38,6 +48,10 @@ const TableRow = ({ getTableBodyProps, rows, prepareRow, editQuiz }) => {
                         iconClass="ri-delete-bin-line mr-2"
                         buttonText="Delete"
                         styleClass="bg-bb-red hover:bg-red-400 focus:shadow-outline focus:outline-none"
+                        onClick={() => {
+                          setOpenQuizDeleteModal(true);
+                          setDeletedQuizId(row.original.id);
+                        }}
                       />
                     </div>
                   </td>
@@ -47,6 +61,15 @@ const TableRow = ({ getTableBodyProps, rows, prepareRow, editQuiz }) => {
           </tr>
         );
       })}
+      {openQuizDeleteModal && (
+        <DeleteQuizModal
+          setOpenModal={setOpenQuizDeleteModal}
+          destroyQuiz={() => {
+            destroyQuiz(deletedQuizId);
+            setOpenQuizDeleteModal(false);
+          }}
+        />
+      )}
     </tbody>
   );
 };

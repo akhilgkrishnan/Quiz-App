@@ -45,4 +45,10 @@ class QuizControllerTest < ActionDispatch::IntegrationTest
     put "/quiz/12", params: { quiz: { title: "Indian Independence Quiz" } }
     assert_response :not_found
   end
+
+  def test_delete_quiz
+    delete "/quiz/#{@quiz.id}"
+    assert_response :success
+    assert_nil Quiz.find_by_id(@quiz.id)
+  end
 end
