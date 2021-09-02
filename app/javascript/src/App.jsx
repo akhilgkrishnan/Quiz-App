@@ -12,6 +12,7 @@ import PrivateRoute from "components/Common/PrivateRoute";
 import Dashboard from "components/Dashboard";
 import CreateQuiz from "components/Quiz/CreateQuiz";
 import EditQuiz from "components/Quiz/EditQuiz";
+import ShowQuiz from "components/Quiz/ShowQuiz";
 
 export const UserLoggedInContext = createContext();
 
@@ -45,6 +46,7 @@ const App = () => {
             component={CreateQuiz}
           />
           <Route exact path="/quiz/:id/edit" component={EditQuiz} />
+          <Route exact path="/quiz/:id/show" component={ShowQuiz} />
           <Route exact path="/login" component={Login} />
           <PrivateRoute
             path="/"

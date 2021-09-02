@@ -26,6 +26,10 @@ const Dashboard = ({ history }) => {
     history.push(`/quiz/${id}/edit`);
   };
 
+  const showQuiz = id => {
+    history.push(`quiz/${id}/show`);
+  };
+
   useEffect(() => {
     fetchQuiz();
   }, []);
@@ -68,6 +72,7 @@ const Dashboard = ({ history }) => {
               data={quizzes}
               editQuiz={editQuiz}
               destroyQuiz={destroyQuiz}
+              showQuiz={showQuiz}
             />
           </div>
         </div>
