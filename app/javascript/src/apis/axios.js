@@ -33,6 +33,7 @@ const handleErrorResponse = error => {
       isLoggedIn: false,
       userName: null
     });
+    window.location.href = "/login";
   }
   Toastr.error(
     error.response?.data?.error ||

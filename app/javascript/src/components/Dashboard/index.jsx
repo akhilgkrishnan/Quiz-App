@@ -22,6 +22,10 @@ const Dashboard = ({ history }) => {
     }
   };
 
+  const editQuiz = id => {
+    history.push(`/quiz/${id}/edit`);
+  };
+
   useEffect(() => {
     fetchQuiz();
   }, []);
@@ -50,7 +54,7 @@ const Dashboard = ({ history }) => {
             </div>
           </div>
           <div className="flex flex-col mt-4 ">
-            <ListQuiz data={quizzes} />
+            <ListQuiz data={quizzes} editQuiz={editQuiz} />
           </div>
         </div>
       </Container>

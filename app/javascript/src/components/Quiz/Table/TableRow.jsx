@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Button from "components/Button";
 
-const TableRow = ({ getTableBodyProps, rows, prepareRow }) => {
+const TableRow = ({ getTableBodyProps, rows, prepareRow, editQuiz }) => {
   return (
     <tbody
       className="bg-white divide-y divide-bb-gray-600"
@@ -10,7 +10,11 @@ const TableRow = ({ getTableBodyProps, rows, prepareRow }) => {
       {rows.map(row => {
         prepareRow(row);
         return (
-          <tr {...row.getRowProps()} key={row.original.id}>
+          <tr
+            className="hover:bg-gray-100"
+            {...row.getRowProps()}
+            key={row.original.id}
+          >
             {row.cells.map((cell, idx) => {
               return (
                 <Fragment key={idx}>
@@ -22,9 +26,10 @@ const TableRow = ({ getTableBodyProps, rows, prepareRow }) => {
                   </td>
                   <td className="px-3 py-4 text-sm text-center font-medium leading-5 whitespace-no-wrap">
                     <Button
-                      type="link"
+                      type="submit"
                       iconClass="ri-pencil-line mr-2"
                       buttonText="Edit"
+                      onClick={() => editQuiz(row.original.id)}
                     />
                   </td>
                   <td className="px-3 py-4 text-sm text-center font-medium leading-5 whitespace-no-wrap">
