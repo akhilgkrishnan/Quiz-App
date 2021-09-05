@@ -7,11 +7,13 @@ const Input = ({
   value,
   onChange,
   placeholder,
+  removableOption = false,
+  removableAction,
   required = true
 }) => {
   return (
     <div className="md:flex md:items-center mt-6">
-      <div className="md:w-1/3">
+      <div className="md:w-2/6">
         {label && (
           <label
             className="block text-md font-medium
@@ -21,7 +23,7 @@ const Input = ({
           </label>
         )}
       </div>
-      <div className="md:w-2/3 mb-1 rounded-md shadow-sm">
+      <div className="md:w-3/6 mb-1 rounded-md shadow-sm">
         <input
           type={type}
           required={required}
@@ -35,6 +37,14 @@ const Input = ({
           focus:border-blue-300 sm:text-sm sm:leading-5"
         />
       </div>
+      {removableOption && (
+        <div className="md:w-1/6">
+          <i
+            className="ml-8 ri-subtract-line hover: shadow-xs cursor-pointer rounded bg-red-700 p-1"
+            onClick={removableAction}
+          ></i>
+        </div>
+      )}
     </div>
   );
 };

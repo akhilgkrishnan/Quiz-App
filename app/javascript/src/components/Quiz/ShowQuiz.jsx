@@ -47,7 +47,7 @@ const showQuiz = () => {
                 type="link"
                 buttonText="Add question"
                 iconClass="ri-add-line"
-                path={"/quiz/create"}
+                path={`/quiz/${quiz.id}/questions/create`}
               />
             </div>
           </div>
@@ -68,7 +68,7 @@ const showQuiz = () => {
               type="link"
               buttonText="Add question"
               iconClass="ri-add-line"
-              path={"/quiz/create"}
+              path={`/quiz/${quiz.id}/questions/create`}
               loading={loading}
             />
           </div>
