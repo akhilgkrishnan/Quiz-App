@@ -18,7 +18,15 @@ class QuizController < ApplicationController
   end
 
   def show
-    render status: :ok, json: { quiz: @quiz, questions: @quiz.questions }
+    render status: :ok, json: {
+      quiz: @quiz,
+      questions: @quiz.questions.as_json(
+        include: {
+          options: {
+            only: [:id, :value]
+          }
+        })
+    }
   end
 
   def update

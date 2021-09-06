@@ -6,6 +6,7 @@ import Container from "components/Container";
 import Button from "components/Button";
 import PageLoader from "components/PageLoader";
 import quizApi from "apis/quiz";
+import ListQuestions from "components/Question/ListQuestions";
 
 const showQuiz = () => {
   const { id } = useParams();
@@ -51,7 +52,7 @@ const showQuiz = () => {
               />
             </div>
           </div>
-          <div> List of questions </div>
+          <ListQuestions questions={questions} />
         </div>
       </Container>
     );
