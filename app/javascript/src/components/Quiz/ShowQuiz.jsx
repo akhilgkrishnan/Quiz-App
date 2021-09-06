@@ -7,6 +7,7 @@ import Button from "components/Button";
 import PageLoader from "components/PageLoader";
 import quizApi from "apis/quiz";
 import ListQuestions from "components/Question/ListQuestions";
+import questionApi from "apis/question";
 
 const showQuiz = () => {
   const { id } = useParams();
@@ -25,6 +26,17 @@ const showQuiz = () => {
     } finally {
       setPageLoading(false);
       setLoading(false);
+    }
+  };
+
+  const handleDeleteQuestion = async question_id => {
+    try {
+      await questionApi.destroy(id, question_id);
+      fetchQuizDetails();
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setPageLoading(false);
     }
   };
 
@@ -52,7 +64,11 @@ const showQuiz = () => {
               />
             </div>
           </div>
-          <ListQuestions questions={questions} />
+          <ListQuestions
+            quiz_id={id}
+            questions={questions}
+            handleDeleteQuestion={handleDeleteQuestion}
+          />
         </div>
       </Container>
     );

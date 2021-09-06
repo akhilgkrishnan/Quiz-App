@@ -5,6 +5,7 @@ import Input from "components/Input";
 import Button from "components/Button";
 
 const QuestionForm = ({
+  question,
   setQuestion,
   options,
   defaultValue = 0,
@@ -41,6 +42,7 @@ const QuestionForm = ({
         label="Question"
         type="text"
         placeholder="Eg: Who is the father of computer?"
+        value={question}
         onChange={e => setQuestion(e.target.value)}
       />
       {options.map((option, index) => (
