@@ -11,7 +11,7 @@ class OptionTest < ActiveSupport::TestCase
       password: "welcome",
       password_confirmation: "welcome")
     @quiz = @user.quizzes.create(title: "World Quiz")
-    @question = @quiz.questions.create(title: "Which is the biggest country?")
+    @question = @quiz.questions.create(title: "Which is the biggest country?", answer: "Russia")
     @option = @question.options.new(value: "Russia")
   end
 
