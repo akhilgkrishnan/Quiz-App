@@ -40,6 +40,17 @@ const showQuiz = () => {
     }
   };
 
+  const handlePublish = async e => {
+    e.preventDefault();
+    try {
+      await quizApi.publish(id);
+      setPageLoading(true);
+      fetchQuizDetails();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchQuizDetails();
   }, []);
@@ -50,37 +61,59 @@ const showQuiz = () => {
   if (!either(isNil, isEmpty)(questions)) {
     return (
       <Container>
-        <div>
-          <div className="flex justify-between">
-            <h1 className="text-2xl font-medium mt-6 text-gray-600">
-              {quiz.title}
-            </h1>
-            <div className="mt-6">
+        <div className="flex flex-col mt-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-medium text-gray-600">{quiz.title}</h1>
+            <div className="flex flex-row gap-4">
               <Button
                 type="link"
                 buttonText="Add question"
                 iconClass="ri-add-line"
                 path={`/quiz/${quiz.id}/questions/create`}
               />
+              <div>
+                {!quiz.slug && (
+                  <Button
+                    type="button"
+                    buttonText="Publish"
+                    onClick={handlePublish}
+                    loading={loading}
+                  />
+                )}
+              </div>
             </div>
           </div>
-          <ListQuestions
-            quiz_id={id}
-            questions={questions}
-            handleDeleteQuestion={handleDeleteQuestion}
-          />
         </div>
+        {quiz.slug && (
+          <div className="mt-4 font-semibold flex items-center">
+            <i className="ri-checkbox-circle-fill px-1"></i>
+            <span className="pr-1">Published, your public link is -</span>
+            <a
+              href={`${window.location.origin}/${quiz.slug}`}
+              className="text-indigo-500"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {window.location.origin}/{quiz.slug}
+            </a>
+          </div>
+        )}
+        <ListQuestions
+          quiz_id={id}
+          questions={questions}
+          handleDeleteQuestion={handleDeleteQuestion}
+        />
       </Container>
     );
   }
   return (
     <Container>
-      <div>
-        <div className="flex justify-between">
+      <div className="flex flex-col">
+        <div className="flex justify-between items-center">
           <h1 className="text-2xl font-medium mt-6 text-gray-600">
             {quiz.title}
           </h1>
-          <div className="mt-6">
+          <div>
             <Button
               type="link"
               buttonText="Add question"
@@ -90,10 +123,10 @@ const showQuiz = () => {
             />
           </div>
         </div>
-        <h1 className="text-xl text-center text-gray-500 flex grid-rows-5 justify-center self-center mt-20">
-          There are no questions in this quiz.
-        </h1>
       </div>
+      <h1 className="text-xl text-center text-gray-500 flex grid-rows-5 justify-center self-center mt-20">
+        There are no questions in this quiz.
+      </h1>
     </Container>
   );
 };
