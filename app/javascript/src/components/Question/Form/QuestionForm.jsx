@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
 import Input from "components/Input";
@@ -11,9 +11,11 @@ const QuestionForm = ({
   defaultValue = 0,
   setOptions,
   handleSubmit,
-  setCorrectAnswer
+  setCorrectAnswer,
+  loading
 }) => {
   const MAX_OPTIONS_COUNT = 4;
+
   const selectCorrectAnswer = [];
   options.forEach((option, index) =>
     selectCorrectAnswer.push({
@@ -51,9 +53,9 @@ const QuestionForm = ({
           label={`Option ${index + 1}`}
           value={option.value}
           removableOption={option.removableOption}
-          removableAction={() =>
-            setOptions(prevState => prevState.filter((_, i) => i !== index))
-          }
+          removableAction={() => {
+            setOptions(prevState => prevState.filter((_, i) => i !== index));
+          }}
           onChange={e => handleSetOptions(e.target.value, index)}
         />
       ))}
@@ -99,7 +101,7 @@ const QuestionForm = ({
         <div className="md:w-1/3"></div>
         <div className="md:w-1/4">
           <div className="mt-6">
-            <Button type="submit" buttonText="Submit" />
+            <Button type="submit" buttonText="Submit" loading={loading} />
           </div>
         </div>
       </div>
