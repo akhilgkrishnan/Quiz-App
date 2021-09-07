@@ -5,7 +5,7 @@ class Quiz < ApplicationRecord
   has_many :questions
 
   validates :title, presence: true
-  validates :slug, uniqueness: true
+  validates :slug, uniqueness: true, on: :update
 
   def set_slug
     itr = 1

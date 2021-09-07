@@ -51,4 +51,10 @@ class QuizControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_nil Quiz.find_by_id(@quiz.id)
   end
+
+  def test_publish_quiz
+    post "/quiz/#{@quiz.id}/publish"
+    assert_response :success
+    assert_equal "public/#{@quiz.title.parameterize}", Quiz.find(@quiz.id).slug
+  end
 end
