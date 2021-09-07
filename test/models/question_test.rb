@@ -11,7 +11,9 @@ class QuestionTest < ActiveSupport::TestCase
       password: "welcome",
       password_confirmation: "welcome")
     @quiz = @user.quizzes.new(title: "World Quiz")
-    @question = @quiz.questions.new(title: "Which is the biggest country?", answer: "Russia")
+    @question = @quiz.questions.new(
+      title: "Which is the biggest country?", answer: "Russia", options_attributes: [{ value: "Russia" },
+{ value: "India" }])
   end
 
   def test_question_invalid_without_title

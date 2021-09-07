@@ -14,6 +14,7 @@ import CreateQuiz from "components/Quiz/CreateQuiz";
 import EditQuiz from "components/Quiz/EditQuiz";
 import ShowQuiz from "components/Quiz/ShowQuiz";
 import CreateQuestion from "components/Question/CreateQuestion";
+import EditQuestion from "components/Question/EditQuestion";
 
 export const UserLoggedInContext = createContext();
 
@@ -48,6 +49,11 @@ const App = () => {
           />
           <Route exact path="/quiz/:id/edit" component={EditQuiz} />
           <Route exact path="/quiz/:id/show" component={ShowQuiz} />
+          <Route
+            exact
+            path="/quiz/:quiz_id/questions/:id/edit"
+            component={EditQuestion}
+          />
           <PrivateRoute
             path="/quiz/:quiz_id/questions/create"
             redirectRoute="/login"
