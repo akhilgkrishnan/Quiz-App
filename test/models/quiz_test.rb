@@ -24,4 +24,16 @@ class QuizTest < ActiveSupport::TestCase
     @quiz.set_slug
     assert_equal "world-quiz", @quiz.slug
   end
+
+  def test_set_slug_method_with_same_title
+    @quiz.set_slug
+    quiz = @user.quizzes.new(title: "World Quiz")
+    quiz.set_slug
+    assert_equal "world-quiz-2", quiz.slug
+  end
+
+  def test_set_slug_multiple_time_is_invalid
+    @quiz.set_slug
+    assert_equal Quiz.find(@quiz.id).set_slug, false
+  end
 end

@@ -6,6 +6,7 @@ class Quiz < ApplicationRecord
 
   validates :title, presence: true
   validates :slug, uniqueness: true, on: :update
+  validate :slug_not_changed, on: :update
 
   def set_slug
     itr = 1
@@ -17,4 +18,14 @@ class Quiz < ApplicationRecord
       itr += 1
     end
   end
+
+  private
+
+    def slug_not_changed
+      return true if slug_was.nil?
+
+      if slug_changed?
+        errors.add(:slug, "is immutable!")
+      end
+    end
 end
