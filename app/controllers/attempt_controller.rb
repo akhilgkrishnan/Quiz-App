@@ -22,7 +22,7 @@ class AttemptController < ApplicationController
 
   def login
     if user
-      attempted = @quiz.attempts.find_by(user_id: user.id).submitted.presence || false
+      attempted = @quiz.attempts.find_by(user_id: user.id)&.submitted.presence || false
       render status: :ok, json: {
         user: user, attempted: attempted
       }

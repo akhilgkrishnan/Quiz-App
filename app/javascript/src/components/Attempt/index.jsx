@@ -6,6 +6,7 @@ import PageLoader from "components/PageLoader";
 import attemptApi from "apis/attempt";
 import AttemptLogin from "components/Attempt/AttemptLogin";
 import Assessment from "./Assessment";
+import AssessmentResult from "./AssessmentResult";
 
 const Attempt = () => {
   const { slug } = useParams();
@@ -16,6 +17,10 @@ const Attempt = () => {
   const [user, setUser] = useState({});
   const [showAssessment, setShowAssessment] = useState(false);
   const [userAttempted, setUserAttempted] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+  const [seletedOptions, setSeletedOptions] = useState([]);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [inCorrectAnswersCount, setInCorrectAnswersCount] = useState(0);
 
   const fetchQuizDetails = async () => {
     try {
@@ -49,6 +54,20 @@ const Attempt = () => {
       </Container>
     );
   }
+
+  if (showResult) {
+    return (
+      <Container>
+        <AssessmentResult
+          quizName={quizName}
+          questions={questions}
+          seletedOptions={seletedOptions}
+          correctAnswersCount={correctAnswersCount}
+          inCorrectAnswersCount={inCorrectAnswersCount}
+        />
+      </Container>
+    );
+  }
   return (
     <Container>
       {!showAssessment ? (
@@ -69,6 +88,11 @@ const Attempt = () => {
           loading={loading}
           user={user}
           setLoading={setLoading}
+          setShowResult={setShowResult}
+          seletedOptions={seletedOptions}
+          setSeletedOptions={setSeletedOptions}
+          setCorrectAnswersCount={setCorrectAnswersCount}
+          setInCorrectAnswersCount={setInCorrectAnswersCount}
         />
       )}
     </Container>

@@ -9,10 +9,13 @@ const Assesment = ({
   user,
   questions,
   loading,
-  setLoading
+  setLoading,
+  setShowResult,
+  seletedOptions,
+  setSeletedOptions,
+  setCorrectAnswersCount,
+  setInCorrectAnswersCount
 }) => {
-  const [options, setOptions] = useState([]);
-
   const handleSubmit = async event => {
     try {
       event.preventDefault();
@@ -20,22 +23,25 @@ const Assesment = ({
       questions.map((question, index) => {
         question.options.map(option => {
           if (
-            option.value == question.correct_answer &&
-            option.id == options[index].option_id
+            option.value == question.answer &&
+            option.id == seletedOptions[index].option_id
           )
             correctAnswers += 1;
         });
       });
+      setCorrectAnswersCount(correctAnswers);
       const incorrectAnswers = questions.length - correctAnswers;
+      setInCorrectAnswersCount(incorrectAnswers);
       await attemptApi.create(slug, {
         assessment: {
           user_id: user.id,
-          attempt_answers_attributes: options,
+          attempt_answers_attributes: seletedOptions,
           correct_answers: correctAnswers,
           incorrect_answers: incorrectAnswers,
           submitted: true
         }
       });
+      setShowResult(true);
     } catch (error) {
       setLoading(false);
       logger.error(error);
@@ -43,7 +49,7 @@ const Assesment = ({
   };
 
   const handleOption = (questionId, answerId) => {
-    setOptions(prevState => {
+    setSeletedOptions(prevState => {
       const object = { question_id: questionId, option_id: answerId };
       const index = prevState.findIndex(
         element => element.question_id == questionId
