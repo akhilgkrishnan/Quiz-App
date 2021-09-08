@@ -4,12 +4,12 @@ class QuizController < ApplicationController
   before_action :load_quiz, only: %i[update show destroy publish]
 
   def index
-    quizzes = current_user.quizzes
+    quizzes = @current_user.quizzes
     render status: :ok, json: { quizzes: quizzes }
   end
 
   def create
-    quiz = current_user.quizzes.new(quiz_params)
+    quiz = @current_user.quizzes.new(quiz_params)
     if quiz.save
       render status: :ok, json: { notice: "Quiz Sucessfully Created" }
     else

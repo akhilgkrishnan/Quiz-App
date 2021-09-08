@@ -2,7 +2,6 @@
 
 class ApplicationController < ActionController::Base
   before_action :set_current_user
-  attr_accessor :current_user
 
   def set_current_user
     if session[:user_id]
