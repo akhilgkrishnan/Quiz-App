@@ -19,4 +19,9 @@ class QuizTest < ActiveSupport::TestCase
     assert @quiz.invalid?
     assert_equal ["Title can't be blank"], @quiz.errors.full_messages
   end
+
+  def test_set_slug_method
+    @quiz.set_slug
+    assert_equal "world-quiz", @quiz.slug
+  end
 end

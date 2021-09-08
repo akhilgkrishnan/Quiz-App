@@ -55,6 +55,6 @@ class QuizControllerTest < ActionDispatch::IntegrationTest
   def test_publish_quiz
     post "/quiz/#{@quiz.id}/publish"
     assert_response :success
-    assert_equal "public/#{@quiz.title.parameterize}", Quiz.find(@quiz.id).slug
+    assert_equal "#{@quiz.title.parameterize}", Quiz.find(@quiz.id).slug
   end
 end
