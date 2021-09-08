@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_09_07_171903) do
     t.integer "user_id", null: false
     t.boolean "submitted", default: false
     t.integer "correct_answers", default: 0, null: false
-    t.integer "incorrect_answer", default: 0, null: false
+    t.integer "incorrect_answers", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["quiz_id"], name: "index_attempts_on_quiz_id"

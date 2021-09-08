@@ -2,20 +2,29 @@
 
 class AttemptController < ApplicationController
   skip_before_action :set_current_user
-  before_action :load_quiz, only: %i[validate_quiz show_quiz login]
+  before_action :load_quiz
 
   def validate_quiz
     redirect_to "/public/#{@quiz.slug}/attempt/new"
   end
 
   def show_quiz
-    render status: :ok, json: { quiz: @quiz }
+    render status: :ok, json: {
+      quiz: @quiz,
+      questions: @quiz.questions.as_json(
+        include: {
+          options: {
+            only: [:value, :id]
+          }
+        })
+    }
   end
 
   def login
     if user
+      attempted = @quiz.attempts.find_by(user_id: user.id).submitted.presence || false
       render status: :ok, json: {
-        user: user
+        user: user, attempted: attempted
       }
     else
       user = User.new(
@@ -26,6 +35,16 @@ class AttemptController < ApplicationController
           user: user
         }
       end
+    end
+  end
+
+  def create
+    attempt = @quiz.attempts.new(attempt_params)
+    if attempt.save
+      render status: :ok, json: { notice: "You have successfully completed the quiz" }
+    else
+      errors = attempt.errors.full_messages
+      render status: :unprocessable_entity, json: { errors: errors }
     end
   end
 
@@ -43,5 +62,11 @@ class AttemptController < ApplicationController
 
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email)
+    end
+
+    def attempt_params
+      params.require(:assessment).permit(
+        :user_id, :correct_answers, :incorrect_answers, :submitted,
+        attempt_answers_attributes: [:id, :question_id, :option_id])
     end
 end

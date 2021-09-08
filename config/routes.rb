@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     member do
       get :show_quiz, path: "show-quiz"
       post :login
+      post :create
     end
   end
   get "/public/:slug", to: "attempt#validate_quiz"

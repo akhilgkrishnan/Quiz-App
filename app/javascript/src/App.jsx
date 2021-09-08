@@ -15,7 +15,7 @@ import EditQuiz from "components/Quiz/EditQuiz";
 import ShowQuiz from "components/Quiz/ShowQuiz";
 import CreateQuestion from "components/Question/CreateQuestion";
 import EditQuestion from "components/Question/EditQuestion";
-import AttemptLogin from "components/Attempt/AttemptLogin";
+import Attempt from "components/Attempt";
 
 export const UserLoggedInContext = createContext();
 
@@ -42,11 +42,7 @@ const App = () => {
       <UserLoggedInContext.Provider value={isLoggedIn}>
         <ToastContainer />
         <Switch>
-          <Route
-            exact
-            path="/public/:slug/attempt/new"
-            component={AttemptLogin}
-          />
+          <Route exact path="/public/:slug/attempt/new" component={Attempt} />
           <PrivateRoute
             path="/quiz/create"
             redirectRoute="/login"
