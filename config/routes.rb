@@ -9,6 +9,14 @@ Rails.application.routes.draw do
     end
     resources :questions, only: %i[create show update destroy]
   end
+  resources :attempt, param: :slug do
+    member do
+      get :show_quiz, path: "show-quiz"
+      post :login
+      post :create
+    end
+  end
+  get "/public/:slug", to: "attempt#validate_quiz"
 
   root "home#index"
   get "*path", to: "home#index", via: :all
