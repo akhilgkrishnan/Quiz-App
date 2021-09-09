@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       post :create
     end
   end
+  resources :report, only: [:index]
+
   get "/public/:slug", to: "attempt#validate_quiz"
 
   root "home#index"
