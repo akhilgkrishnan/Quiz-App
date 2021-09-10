@@ -17,6 +17,7 @@ import CreateQuestion from "components/Question/CreateQuestion";
 import EditQuestion from "components/Question/EditQuestion";
 import Attempt from "components/Attempt";
 import Report from "components/Report";
+import DownloadReport from "components/Report/DownloadReport";
 
 export const UserLoggedInContext = createContext();
 
@@ -58,6 +59,7 @@ const App = () => {
             component={EditQuestion}
           />
           <Route exact path="/reports" component={Report} />
+          <Route exact path="/reports/download" component={DownloadReport} />
           <PrivateRoute
             path="/quiz/:quiz_id/questions/create"
             redirectRoute="/login"
