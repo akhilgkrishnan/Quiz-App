@@ -25,6 +25,7 @@ const showQuiz = () => {
       logger.error(error);
     } finally {
       setPageLoading(false);
+      setLoading(false);
     }
   };
 
@@ -43,7 +44,7 @@ const showQuiz = () => {
     e.preventDefault();
     try {
       await quizApi.publish(id);
-      setPageLoading(true);
+      setLoading(true);
       fetchQuizDetails();
     } catch (error) {
       logger.error(error);
