@@ -23,6 +23,8 @@ const showQuiz = () => {
       setQuestions(response.data.questions);
     } catch (error) {
       logger.error(error);
+    } finally {
+      setPageLoading(false);
     }
   };
 
