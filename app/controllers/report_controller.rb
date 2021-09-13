@@ -17,10 +17,18 @@ class ReportController < ApplicationController
   end
 
   def generate_report
-    respond_to do |format|
-      format.html
-      format.csv { send_data report.to_csv, filename: "report-#{Time.zone.today}.csv" }
+    report_id = SecureRandom.hex(3)
+    report.generate_report(report_id: report_id)
+    while true
+      if File.exist?("#{Rails.root}/public/reports/report_#{report_id}.csv")
+        break
+      end
     end
+
+    render json: {
+      notice: "Report Generation Completed",
+      report_path: "/reports/report_#{report_id}.csv"
+    }, status: :ok
   end
 
   private

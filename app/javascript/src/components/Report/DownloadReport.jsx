@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Container from "components/Container";
 import Button from "components/Button";
+import reportApi from "apis/report";
 
 const DownloadReport = () => {
-  const [delay, setDelay] = useState(false);
+  const [reportGenerated, setReportGenerated] = useState(false);
+  const [reportPath, setReportPath] = useState("");
 
-  setTimeout(() => {
-    setDelay(true);
-  }, 10 * 1000);
+  const fetchQuizDetails = async () => {
+    try {
+      const response = await reportApi.generate();
+      setReportPath(response.data.report_path);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setReportGenerated(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuizDetails();
+  }, []);
 
   return (
     <Container>
@@ -17,10 +30,10 @@ const DownloadReport = () => {
       </div>
       <div className="flex flex-row items-center justify-center mt-40">
         <h1 className="text-lg leading-5 flex flex-col items-center justify-center">
-          {delay ? (
+          {reportGenerated ? (
             <>
               <p>Report is now ready for download</p>
-              <form className="mt-4" action="/report/generate_report.csv">
+              <form className="mt-4" action={reportPath}>
                 <Button type="submit" buttonText="Download Report" />
               </form>
             </>
