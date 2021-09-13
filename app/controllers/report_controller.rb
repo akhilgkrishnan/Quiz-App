@@ -26,6 +26,6 @@ class ReportController < ApplicationController
   private
 
     def report
-      @_report ||= Attempt.all.order("created_at desc")
+      @_report ||= Attempt.where(submitted: true).order("created_at desc")
     end
 end
