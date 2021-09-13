@@ -4,10 +4,11 @@ require "csv"
 class ReportGeneratorJob < ApplicationJob
   queue_as :default
 
-  def perform(reports)
+  def perform(report_id, reports)
+    sleep 10
+    file = "#{Rails.root}/public/reports/report_#{report_id}.csv"
     head = ["quiz_name", "user_name", "email", "correct_answers", "incorrect_answers"]
-    CSV.generate(headers: true) do |csv|
-      csv << head
+    CSV.open(file, "w", write_headers: true, headers: head) do |csv|
       reports.each do |report|
         csv << [
           report["quiz"]["title"], "#{report["user"]["first_name"]} #{report["user"]["last_name"]}",

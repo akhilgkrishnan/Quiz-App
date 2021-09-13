@@ -7,8 +7,9 @@ class Attempt < ApplicationRecord
 
   accepts_nested_attributes_for :attempt_answers, allow_destroy: true
 
-  def self.to_csv
-    ReportGeneratorJob.perform_now(
+  def self.generate_report(report_id:)
+    ReportGeneratorJob.perform_later(
+      report_id,
       all.as_json(
         include: {
           quiz: {
